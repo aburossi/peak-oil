@@ -82,7 +82,6 @@
     );
 
     const PeakOilTimeline = () => {
-      const { ChevronLeft, ChevronRight } = LucideReact; // Import here
       const [activeIndex, setActiveIndex] = useState(0);
 
       const handlePrev = () => {
@@ -98,13 +97,13 @@
           <h2 className="text-2xl font-bold mb-4">Peak Oil History Timeline</h2>
           <div className="flex items-center mb-4">
             <button onClick={handlePrev} className="p-2" disabled={activeIndex === 0}>
-              <ChevronLeft size={24} />
+              <LucideReact.ChevronLeft size={24} /> 
             </button>
             <div className="flex-grow text-center">
               <span className="font-bold">{timelineData[activeIndex].year}</span>
             </div>
             <button onClick={handleNext} className="p-2" disabled={activeIndex === timelineData.length - 1}>
-              <ChevronRight size={24} />
+              <LucideReact.ChevronRight size={24} /> 
             </button>
           </div>
           <div className="space-y-4 max-h-96 overflow-y-auto">
