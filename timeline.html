@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peak Oil Timeline</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/lucide-react/dist/lucide-react.esm.js"></script>
+</head>
+<body>
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+    const { ChevronLeft, ChevronRight } = LucideReact;
+
+    const timelineData = [
+      {
+        year: 1956,
+        event: "M. King Hubbert predicts US oil production peak",
+        description: "Geologist M. King Hubbert correctly predicts that US oil production would peak between 1965 and 1970."
+      },
+      // ... (rest of your timelineData array)
+    ];
+
+    const TimelineEvent = ({ event, isActive, onClick }) => (
+      <div 
+        className={`cursor-pointer p-4 border-l-4 ${isActive ? 'border-blue-500 bg-blue-100' : 'border-gray-300'}`}
+        onClick={onClick}
+      >
+        <h3 className="text-lg font-bold">{event.year}</h3>
+        <p className="font-semibold">{event.event}</p>
+        {isActive && <p className="mt-2">{event.description}</p>}
+      </div>
+    );
+
+    const PeakOilTimeline = () => {
+      const [activeIndex, setActiveIndex] = useState(0);
+
+      const handlePrev = () => {
+        setActiveIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
+      };
+
+      const handleNext = () => {
+        setActiveIndex((prevIndex) => (prevIndex < timelineData.length - 1 ? prevIndex + 1 : prevIndex));
+      };
+
+      return (
+        <div className="max-w-4xl mx-auto p-4">
+          <h2 className="text-2xl font-bold mb-4">Peak Oil History Timeline</h2>
+          <div className="flex items-center mb-4">
+            <button onClick={handlePrev} className="p-2" disabled={activeIndex === 0}>
+              <ChevronLeft size={24} />
+            </button>
+            <div className="flex-grow text-center">
+              <span className="font-bold">{timelineData[activeIndex].year}</span>
+            </div>
+            <button onClick={handleNext} className="p-2" disabled={activeIndex === timelineData.length - 1}>
+              <ChevronRight size={24} />
+            </button>
+          </div>
+          <div className="space-y-4 max-h-96 overflow-y-auto">
+            {timelineData.map((event, index) => (
+              <TimelineEvent
+                key={event.year}
+                event={event}
+                isActive={index === activeIndex}
+                onClick={() => setActiveIndex(index)}
+              />
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    ReactDOM.render(<PeakOilTimeline />, document.getElementById('root'));
+  </script>
+
+</body>
+</html>
